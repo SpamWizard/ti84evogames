@@ -1,0 +1,215 @@
+PROGRAM: IDLE  (TI-BASIC, TI-84 Plus CE / Evo)
+Uses lists L1-L6 and variables A-Z. Paste into Cemetech SourceCoder -> export .8xp
+SourceCoder accepts: -> for store, >= != for comparisons. No indentation needed.
+==========================================================================
+
+Float
+{15,200,3000,50000,1000000}->L3
+{.5,4,30,250,2000}->L4
+{1,2,3,4,5}->L5
+{2,1.8,2.2,2,1.7}->L6
+"SPARK    COIL     REACTOR  COLLIDER VOID     "->Str1
+"OVERCLOCK   DISCOUNT    KICKSTART   MILESTONES  OFFLINE     "->Str4
+"                              "->Str3
+If dim(L1)!=5 or dim(L2)!=5
+Then
+{0,0,0,0,0}->L1
+{0,0,0,0,0}->L2
+0->E
+0->T
+0->K
+0->C
+0->U
+End
+sum(getTime*{3600,60,1})->N
+0->O
+If U>0
+Then
+N-U+86400*(N<U)->O
+min(28800,O)->O
+End
+N->U
+0->S
+1->F
+1->G
+startTmr->Z
+0->W
+ClrHome
+Repeat J=45
+If F
+Then
+0->R
+For(I,1,5)
+R+L1(I)*L4(I)*2^(int(L1(I)/max(5,25-2*L2(4))))->R
+End
+R*(1+.1*K)*(1+.25*L2(1))->R
+If O>30
+Then
+R*O*min(1,.1+.1*L2(5))->B
+E+B->E
+T+B->T
+ClrHome
+Output(2,1,"WELCOME BACK")
+Output(4,1,"AWAY "+toString(int(O/60))+" MIN")
+Output(5,1,"GAINED "+toString(round(B,0)))
+Output(10,1,"PRESS ENTER")
+Repeat getKey=105
+End
+ClrHome
+End
+0->O
+0->F
+1->G
+End
+checkTmr(Z)->X
+max(0,X-W)->D
+X->W
+If D>0
+Then
+E+R*D->E
+T+R*D->T
+min(E,10^98)->E
+min(T,10^98)->T
+sum(getTime*{3600,60,1})->U
+1->G
+End
+getKey->J
+sum((J={92,93,94,82,83})*{1,2,3,4,5})->M
+If J=105 and S=0
+Then
+E+1+.1*R->E
+T+1+.1*R->T
+1->G
+End
+If M>0 and S=0
+Then
+round(L3(M)*1.15^L1(M)*.95^L2(2),0)->B
+If E>=B
+Then
+E-B->E
+L1(M)+1->L1(M)
+1->F
+1->G
+End
+End
+If M>0 and S=1
+Then
+round(L5(M)*L6(M)^L2(M),0)->B
+If C>=B
+Then
+C-B->C
+L2(M)+1->L2(M)
+1->F
+1->G
+Repeat not(getKey)
+End
+End
+End
+If J=84 and S=0
+Then
+For(H,1,5)
+6-H->M
+round(L3(M)*1.15^L1(M)*.95^L2(2),0)->B
+0->A
+While E>=B and A<100
+E-B->E
+L1(M)+1->L1(M)
+A+1->A
+round(L3(M)*1.15^L1(M)*.95^L2(2),0)->B
+End
+End
+1->F
+1->G
+End
+If J=73
+Then
+1-S->S
+ClrHome
+1->G
+Repeat not(getKey)
+End
+End
+If J=72 and S=0
+Then
+int((T/1000000)^.5)->B
+ClrHome
+Output(1,1,"PRESTIGE: RESET RUN")
+Output(3,1,"GAIN CORES: "+toString(B))
+Output(5,1,"ENTER=YES CLEAR=NO")
+Repeat J=105 or J=45
+getKey->J
+End
+If J=105 and B>0
+Then
+K+B->K
+C+B->C
+{0,0,0,0,0}->L1
+50*(4^L2(3)-1)->E
+0->T
+End
+0->J
+ClrHome
+1->F
+1->G
+End
+If J=74 and S=1
+Then
+ClrHome
+Output(2,1,"WIPE EVERYTHING?")
+Output(4,1,"ENTER=YES CLEAR=NO")
+Repeat J=105 or J=45
+getKey->J
+End
+If J=105
+Then
+{0,0,0,0,0}->L1
+{0,0,0,0,0}->L2
+0->E
+0->T
+0->K
+0->C
+End
+0->J
+0->S
+ClrHome
+1->F
+1->G
+End
+If J=45 and S=1
+Then
+0->S
+0->J
+ClrHome
+1->G
+End
+If G
+Then
+0->G
+If S=0
+Then
+Output(1,1,sub("ENERGY "+toString(round(E,0))+Str3,1,26))
+Output(2,1,sub("PER SEC "+toString(round(R,1))+Str3,1,26))
+Output(3,1,sub("CORES "+toString(C)+"  MULT X"+toString(round((1+.1*K)*(1+.25*L2(1)),2))+Str3,1,26))
+Output(4,1,sub("PRESTIGE GAIN: "+toString(int((T/1000000)^.5))+Str3,1,26))
+For(I,1,5)
+round(L3(I)*1.15^L1(I)*.95^L2(2),0)->B
+sub(" >",1+(E>=B),1)+toString(I)+sub(Str1,9*I-8,9)+"X"+toString(L1(I))+" "+toString(B)->Str2
+Output(4+I,1,sub(Str2+Str3,1,26))
+End
+Output(10,1,"6=MAX 7=PRESTIGE 8=SHOP")
+Else
+Output(1,1,sub("CORE SHOP  CORES:"+toString(C)+Str3,1,26))
+For(M,1,5)
+round(L5(M)*L6(M)^L2(M),0)->B
+toString(M)+sub(Str4,12*M-11,12)+"L"+toString(L2(M))+" "+toString(B)->Str2
+Output(1+M,1,sub(Str2+Str3,1,26))
+End
+Output(7,1,"9=WIPE SAVE CLR=BACK")
+Output(8,1,"1:+25PCT PROD 2:-5PCT COST")
+Output(9,1,"3:START NRG 4:MILE -2 LVLS")
+Output(10,1,"5:+10PCT AWAY PAY")
+End
+End
+End
+ClrHome
+Disp "PROGRESS SAVED","SEE YOU SOON"
